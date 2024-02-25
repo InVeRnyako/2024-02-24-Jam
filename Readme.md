@@ -7,7 +7,7 @@ Actual time spent:
 	- planning ~12 hours
 	- coding ~12 hours
 
-Result demo: https://www.youtube.com/watch?v=uSuQg-ZstkA
+Day 2 demo: https://www.youtube.com/watch?v=uSuQg-ZstkA
 
 # Original plan: 
 
