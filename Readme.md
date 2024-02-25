@@ -2,9 +2,14 @@
 
 ## Theme: One Tool, Many Uses
 Link: https://itch.io/jam/indie-dev-jam-3
-Time: 3 days
-Timestamps:
-	30min Readme
+JamTimeLimit: 3 days
+Actual time spent: 
+	- planning ~12 hours
+	- coding ~12 hours
+
+
+
+# Original plan: 
 
 Main idea: Zelda-like game about child controlling ball of water.
 
