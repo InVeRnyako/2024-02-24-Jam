@@ -8,9 +8,11 @@ extends CharacterBody2D
 @export var isFlying : bool = false
 @export var orbitSpeedMult : float = 0.3
 
-@onready var BallSprite : Sprite2D = $BallForm
-@onready var IcecleSprite : Sprite2D = $IcicleForm
+@onready var BallSprite : Sprite2D = $BallSprite
+@onready var SphereSprite : Sprite2D = $StateMachine/SphereState/SphereForm
+@onready var IcecleSprite : Sprite2D = $StateMachine/IcicleState/IcicleForm # (TODO) TEMP
 @onready var flyTimer : Timer = $FlyTimer
+@onready var hitbox : Area2D = $Hitbox
 
 @onready var d := 0.0
 
@@ -28,24 +30,30 @@ func set_player(playerToSet : CharacterBody2D):
 
 func _process(delta: float) -> void:
 	targetPosition = player.position
-	BallSprite.visible = ballForm
-	IcecleSprite.visible = icecleForm
+	if ballForm:
+		BallSprite.texture = SphereSprite.texture
+	else:
+		BallSprite.texture = IcecleSprite.texture
+	# BallSprite.visible = true
 	p += delta
 	if flyTimer.is_stopped():
 		flyOnOrbit()
 	else:
 		flyToDirection()
 
-
+func changeSprite(newSprite : Sprite2D):
+	BallSprite.texture = newSprite.texture
 
 func startFlying():
+	print("StartFlying", global_position)
 	global_position = player.global_position
+	print(global_position)
 	global_position.x += radius
 	if player.animation.flip_h:
-		IcecleSprite.flip_h = true
+		BallSprite.flip_h = true
 		flyingDirection = -1
 	else:
-		IcecleSprite.flip_h = false
+		BallSprite.flip_h = false
 		flyingDirection = 1
 	flyTimer.start()
 	changeForm()
@@ -64,13 +72,16 @@ func changeForm():
 	ballForm = !ballForm
 	icecleForm = !icecleForm
 	if icecleForm:
-		set_collision_layer_value(3,true)
-		set_collision_mask_value(4, true)
+		setCollision("3","4")
 	else:
-		set_collision_layer_value(3,false)
-		set_collision_mask_value(4, false)
+		setCollision("","")
 
-func flyOnOrbit():
+func setCollision(layersList : String, masksList : String):
+	for i in range(1,9):
+		hitbox.set_collision_layer_value(i, char(i) in layersList)
+		hitbox.set_collision_mask_value(i, char(i) in masksList)
+
+func flyOnOrbit(): # (TODO) REMOVE
 	if readyToFly:
 		global_position = getPositionOnOrbit()
 		return

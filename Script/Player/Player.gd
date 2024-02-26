@@ -33,7 +33,7 @@ func _ready() -> void:
 	speedUpdate()
 	brain.init(self)
 	ball.set_player(self)
-	animation.play()
+	# animation.play()
 
 func speedUpdate():
 	Speed = int(float(BaseSpeed) * ModSpeed)
