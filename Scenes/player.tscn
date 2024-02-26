@@ -233,6 +233,7 @@ script = ExtResource("1_hu6ed")
 BaseSpeed = 100
 BaseAcceleration = 30
 BaseFriction = 10
+BallRotationSpeed = 5.0
 brain = NodePath("EST")
 animation = NodePath("Player_animatedSprite")
 

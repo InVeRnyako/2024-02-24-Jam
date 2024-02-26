@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://bycoaweeg1ld8"]
+[gd_scene load_steps=8 format=3 uid="uid://bycoaweeg1ld8"]
 
 [ext_resource type="Texture2D" uid="uid://dg6wygwhju14t" path="res://images/Player/Icecle_custom.png" id="1_367lw"]
 [ext_resource type="Script" path="res://Script/Ball/ball.gd" id="1_cknhp"]
 [ext_resource type="Texture2D" uid="uid://bas3mgov53x3y" path="res://images/Player/Rock1.png" id="1_r1vib"]
+[ext_resource type="Script" path="res://Script/Ball/StateMachine/StateMachine.gd" id="3_4wxeb"]
 [ext_resource type="Script" path="res://Script/Ball/StateMachine/SphereState.gd" id="4_40w1o"]
 [ext_resource type="Script" path="res://Script/Ball/StateMachine/IcicleState.gd" id="5_uhefy"]
 
@@ -10,21 +11,15 @@
 radius = 4.12311
 
 [node name="Ball" type="CharacterBody2D"]
-scale = Vector2(3, 3)
 collision_layer = 0
+slide_on_ceiling = false
 script = ExtResource("1_cknhp")
-speed = 10
-orbitSpeedMult = 0.2
 
 [node name="BallSprite" type="Sprite2D" parent="."]
 texture = ExtResource("1_r1vib")
 
 [node name="BallCollision" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_rk8p7")
-
-[node name="FlyTimer" type="Timer" parent="."]
-wait_time = 1.5
-one_shot = true
 
 [node name="Hitbox" type="Area2D" parent="."]
 collision_layer = 4
@@ -34,6 +29,7 @@ collision_mask = 8
 shape = SubResource("CircleShape2D_rk8p7")
 
 [node name="StateMachine" type="Node" parent="."]
+script = ExtResource("3_4wxeb")
 
 [node name="SphereState" type="Node" parent="StateMachine"]
 script = ExtResource("4_40w1o")
@@ -53,5 +49,9 @@ visibility_layer = 0
 scale = Vector2(3, 3)
 texture = ExtResource("1_367lw")
 
-[connection signal="timeout" from="FlyTimer" to="." method="_on_fly_timer_timeout"]
+[node name="FlyTimer" type="Timer" parent="StateMachine/IcicleState"]
+wait_time = 1.5
+one_shot = true
+
 [connection signal="area_entered" from="Hitbox" to="." method="_on_area_2d_area_entered"]
+[connection signal="timeout" from="StateMachine/IcicleState/FlyTimer" to="." method="_on_fly_timer_timeout"]
