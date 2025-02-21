@@ -20,6 +20,7 @@ zoom = Vector2(1.9, 1.9)
 metadata/_edit_lock_ = true
 
 [node name="Player" parent="." instance=ExtResource("2_qx1ch")]
+BallsCount = 24
 
 [node name="Target" type="Area2D" parent="."]
 position = Vector2(143, -1)

@@ -49,7 +49,7 @@ func _ready() -> void:
 func recountOrbitOffset():
 	if BallsArray.size() > 0:
 		var offsetCount = 0
-		var offsetMultiplier = 2 * PI / 3
+		var offsetMultiplier = 2 * PI / BallsCount
 		for i in BallsArray.size():
 			BallsArray[i].orbitOffset = offsetCount * offsetMultiplier
 			offsetCount += 1
